@@ -1,0 +1,3 @@
+Created models for vechiles, with category as foreign key
+defined views for index/carsingle/
+fetch the vehicle date to index/ filtering as per aproval is pending
