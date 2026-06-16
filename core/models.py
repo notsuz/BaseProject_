@@ -24,5 +24,12 @@ class Vehicles(models.Model):
         return self.title
     
     
+class VehicleImage(models.Model):
+    vehicle = models.ForeignKey(Vehicles, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='images')
+    
+    def __str__(self):
+        return self.vehicle.title
+    
 
     
