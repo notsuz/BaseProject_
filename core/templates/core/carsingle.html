@@ -4,10 +4,10 @@
 
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="position: relative; overflow: hidden;">
-
-	<img src="{% static 'images/bg_3.jpg' %}" alt="Car Details Background"
+	{% for i in uniVehicles.images.all %}
+	<img src="{{i.image.url}}" alt="Car Details Background"
 		style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
-
+	{% endfor %}
 	<div class="overlay"
 		style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); z-index: 1;">
 	</div>
@@ -39,7 +39,7 @@
 					{% for i in uniVehicles.images.all %}
 					<div class="img rounded" style="position: relative; width: 100%; height: 400px; overflow: hidden;">
 						<img src="{{ i.image.url }}" alt="Vehicle Image"
-							style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+							style="position: absolute; top: 0; left: 0; width: 100%; height: 500px; object-fit: fill;">
 					</div>
 					{% empty %}
 					<div class="alert alert-warning text-center my-3">

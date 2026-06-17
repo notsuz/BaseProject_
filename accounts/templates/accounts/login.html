@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Access | MyShop</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css" />
+    
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+
+    <main class="auth-wrapper">
+        <a href="{% url 'index' %}" class="close-store-action" aria-label="Close and return to home">
+            <i class="fa-solid fa-xmark"></i>
+        </a>
+
+        <section class="auth-media-panel">
+            <div class="brand-watermark">myShop</div>
+            
+            <div class="graphic-frame">
+                <img src="{% static 'images/auth.png' %}" alt="E-commerce Editorial Preview">
+            </div>
+
+            <div class="media-editorial-text">
+                <span class="editorial-tag">The Autumn Collection</span>
+                <h2 class="editorial-title">Curated Simplicity. Built around your lifestyle.</h2>
+            </div>
+        </section>
+
+        <section class="auth-form-panel">
+            <div class="form-container">
+                
+                <header class="form-intro">
+                    <h1 class="welcome-heading">Welcome Back</h1>
+                    <p class="welcome-subtext">Access your personal wardrobe portal, tracked orders, and tailored aesthetic selections.</p>
+                </header>
+
+                <form action="{% url 'log_in' %}" method="POST" class="secure-login-form">
+                    {% csrf_token %}
+                    
+                    <div class="input-structural-group">
+                        <label for="username_field" class="fixed-field-label">Username or Email Address</label>
+                        <input required type="text" name="username" id="username_field" class="premium-field" placeholder="Enter your username or email">
+                        <input type="hidden" value="{{next}}" name="next">
+                    </div>
+
+                    <div class="input-structural-group">
+                        <label for="password_field" class="fixed-field-label">Account Password</label>
+                        <input required type="password" name="password" id="password_field" class="premium-field" placeholder="••••••••••••">
+                    </div>
+
+                    <div class="form-meta-row">
+                        <label class="remember-me-toggle">
+                            <input type="checkbox" name="remember_me" class="custom-checkbox">
+                            <span class="toggle-label-text">Keep me signed in</span>
+                        </label>
+                        <a href="{% url 'password_reset' %}" class="lost-access-link">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="prime-action-btn">
+                        <span>Sign In</span>
+                        <i class="fa-solid fa-arrow-right-long button-arrow"></i>
+                    </button>
+
+                    <p class="auth-toggle-notice">
+                        New to MyShop? <a href="{% url 'register' %}" class="auth-toggle-link">Create your account profile</a>
+                    </p>
+                </form>
+
+                <div class="editorial-divider">
+                    <span class="divider-line"></span>
+                    <span class="divider-text">Alternative Secure Login</span>
+                    <span class="divider-line"></span>
+                </div>
+
+                <div class="social-engine-row">
+                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="social-provider-card">
+                        <i class="fa-brands fa-google provider-logo"></i>
+                        <span class="provider-name">Google ID</span>
+                    </a>
+                    <a href="{% url 'social:begin' 'github' %}" class="social-provider-card">
+                        <i class="fa-brands fa-github provider-logo"></i>
+                        <span class="provider-name">GitHub</span>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+    {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <script>
+            alertify.set('notifier', 'position', 'top-right')
+            alertify.success('{{message}}')
+        </script>
+        {% else %}
+        <script>
+            alertify.set('notifier', 'position', 'top-right')
+            alertify.error('{{message}}')
+        </script>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
