@@ -9,3 +9,5 @@ Day 3
 accounts app created
 sign in/ sign up page needs to be mainiained along with nav bar
 
+Day 4
+merged to main after completion
