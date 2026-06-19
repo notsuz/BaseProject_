@@ -1,5 +1,11 @@
+Day 1 & 2
 Created models for vechiles, with category as foreign key
 defined views for index/carsingle/
 fetch the vehicle date to index
 created vehicles section and viewing the specific vehicle done
 filtering as per aproval is pending
+
+Day 3
+accounts app created
+sign in/ sign up page needs to be mainiained along with nav bar
+
