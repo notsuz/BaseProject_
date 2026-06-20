@@ -11,3 +11,8 @@ sign in/ sign up page needs to be mainiained along with nav bar
 
 Day 4
 merged to main after completion
+
+
+Day 5
+Fixing the rating process
+rating form not submitted need fixes

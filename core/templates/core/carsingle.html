@@ -206,135 +206,84 @@
 							<div class="row">
 								<div class="col-md-7">
 									<h3 class="head">23 Reviews</h3>
-									<div class="review d-flex">
-										<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-										<div class="desc">
+									{% for review in reviews %}
+									<div class="review d-flex align-items-start mb-4">
+										{% if review.user.profile.profile_picture %}
+										<img src="{{ review.user.profile.profile_picture.url }}" class="user-img"
+											alt="{{ review.user.username }}'s avatar">
+										{% else %}
+										<img src="{% static 'images/avatar.png' %}" class="user-img"
+											alt="Default avatar">
+										{% endif %}
+
+										<div class="desc ms-3 w-100">
 											<h4>
-												<span class="text-left">Jacob Webb</span>
-												<span class="text-right">14 March 2018</span>
+												<span class="text-left">{{ review.user.username }}</span>
+												<span class="text-right">{{ review.created_at|date:"d F Y" }}</span>
 											</h4>
+
 											<p class="star">
 												<span>
+													{% for i in range %}
+													{% if review.rating >= i %}
 													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
+													{% else %}
+													<i class="ion-ios-star-outline" style="color: #ccc;"></i>
+													{% endif %}
+													{% endfor %}
 												</span>
-												<span class="text-right"><a href="#" class="reply"><i
-															class="icon-reply"></i></a></span>
+												<span class="text-right">
+													<a href="#" class="reply"><i class="icon-reply"></i></a>
+												</span>
 											</p>
-											<p>When she reached the first hills of the Italic Mountains, she had a last
-												view back on the skyline of her hometown Bookmarksgrov</p>
+
+											<p>{{ review.feedback }}</p>
 										</div>
 									</div>
-									<div class="review d-flex">
-										<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
-										<div class="desc">
-											<h4>
-												<span class="text-left">Jacob Webb</span>
-												<span class="text-right">14 March 2018</span>
-											</h4>
-											<p class="star">
-												<span>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-												</span>
-												<span class="text-right"><a href="#" class="reply"><i
-															class="icon-reply"></i></a></span>
-											</p>
-											<p>When she reached the first hills of the Italic Mountains, she had a last
-												view back on the skyline of her hometown Bookmarksgrov</p>
-										</div>
-									</div>
-									<div class="review d-flex">
-										<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
-										<div class="desc">
-											<h4>
-												<span class="text-left">Jacob Webb</span>
-												<span class="text-right">14 March 2018</span>
-											</h4>
-											<p class="star">
-												<span>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-												</span>
-												<span class="text-right"><a href="#" class="reply"><i
-															class="icon-reply"></i></a></span>
-											</p>
-											<p>When she reached the first hills of the Italic Mountains, she had a last
-												view back on the skyline of her hometown Bookmarksgrov</p>
-										</div>
-									</div>
+									{% empty %}
+									<p class="text-muted text-center my-4">No reviews found.</p>
+									{% endfor %}
 								</div>
+
+								{% if request.user.is_authenticated %}
 								<div class="col-md-5">
-									<div class="rating-wrap">
-										<h3 class="head">Give a Review</h3>
-										<div class="wrap">
-											<p class="star">
-												<span>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													(98%)
-												</span>
-												<span>20 Reviews</span>
-											</p>
-											<p class="star">
-												<span>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													(85%)
-												</span>
-												<span>10 Reviews</span>
-											</p>
-											<p class="star">
-												<span>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													(70%)
-												</span>
-												<span>5 Reviews</span>
-											</p>
-											<p class="star">
-												<span>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													(10%)
-												</span>
-												<span>0 Reviews</span>
-											</p>
-											<p class="star">
-												<span>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													<i class="ion-ios-star"></i>
-													(0%)
-												</span>
-												<span>0 Reviews</span>
-											</p>
+									<form class="review-form" method="POST"
+										action="{% url 'carsingle' uniVehicles.id %}">
+										{% csrf_token %}
+
+										<div class="form-group mb-3">
+											<label class="fw-bold mb-1">Your rating</label>
+											<div class="reviews-counter">
+												<div class="rate" id="star-container">
+													{% for i in range %}
+													<i class="fa fa-star star" data-value="{{ i }}"></i>
+													{% endfor %}
+												</div>
+											</div>
+											<input type="hidden" name="rating" id="rating-value" required>
 										</div>
-									</div>
+
+										<div class="form-group mb-3">
+											<label class="fw-bold mb-1">Your message</label>
+											<textarea name="feedback" class="form-control" rows="6" required></textarea>
+										</div>
+
+										{% if form.errors %}
+										<div class="alert alert-danger p-2 small">
+											{{ form.errors }}
+										</div>
+										{% endif %}
+
+										<button type="submit" class="round-black-btn">Submit Review</button>
+									</form>
 								</div>
+								{% else %}
+								<div class="col-md-5 text-center">
+									<p class="text-center alert alert-info">Login in order to Review the product</p>
+									<a href="{% url 'log_in' %}"><button
+											class="btn btn-info text-white">Login</button></a>
+								</div>
+								{% endif %}
 							</div>
 						</div>
 					</div>

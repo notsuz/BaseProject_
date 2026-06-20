@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -13,6 +9,8 @@
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
         rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %} ">
@@ -53,7 +51,48 @@
                     <li class="nav-item"><a href="{% url 'vehicleDisplay' %}" class="nav-link">Vehicles</a></li>
                     <!-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> -->
                     <li class="nav-item"><a href="" class="nav-link">Contact</a></li>
+
                 </ul>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                {% if request.user.is_authenticated %}
+                <div class="dropdown">
+                    <a href="#" class="icon-btn" data-bs-toggle="dropdown">
+                        {% if request.user.profile.profile_picture %}
+                        <img src="{{request.user.profile.profile_picture.url}}" height="35px" width="35px"
+                            style="border-radius: 50%; border: 3px solid rgb(47, 158, 185);" alt="Profile Picture">
+                        {% else %}
+                        <img src="{% static 'images/avatar.png' %}" height="35px" width="35px"
+                            style="border-radius: 50%; border: 3px solid rgb(65, 191, 223);" alt="Default Profile">
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'profile_dashboard' %}">
+                                <i class="fas fa-user-circle me-2 text-muted"
+                                    style="font-size:11px"></i>{{request.user.username}}
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'log_out' %}">
+                                <i class="fas fa-sign-out-alt me-2 text-muted" style="font-size:11px"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% else %}
+                <div class="accountsSign mx-2">
+                <a href="{% url 'log_in' %}" class="btn btn-sm btn-outline-dark me-1">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-sm btn-primary">Sign Up</a>
+                </div>
+                {% endif %}
+
+                
+                
             </div>
         </div>
     </nav>
