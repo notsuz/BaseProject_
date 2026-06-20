@@ -43,6 +43,10 @@ INSTALLED_APPS = [
 EXTERNAL_APPS=[
     'core',
     'accounts',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'social_django',
     
 ]
 
@@ -56,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
+
 ]
 
 ROOT_URLCONF = 'Aplatform.urls'
@@ -132,3 +138,24 @@ STATICFILES_DIRS=[
 
 MEDIA_ROOT= os.path.join(BASE_DIR, "media")
 MEDIA_URL="/media/"
+
+
+# user login
+LOGIN_URL="log_in"
+LOGIN_REDIRECT_URL ="index"
+LOGOUT_URL="log_out"
+LOGOUT_REDIRECT_URL ="log_in"
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+
+SOCIAL_AUTH_GITHUB_KEY = config('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = config('SOCIAL_AUTH_GITHUB_SECRET')

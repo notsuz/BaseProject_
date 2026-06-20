@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from accounts.models import CustomUser
 # Create your models here.
 
 
@@ -31,5 +32,13 @@ class VehicleImage(models.Model):
     def __str__(self):
         return self.vehicle.title
     
-
+class Review(models.Model):
+    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    vehicle=models.ForeignKey(Vehicles, on_delete=models.CASCADE, related_name='reviews')
+    rating=models.PositiveSmallIntegerField()
+    feedback=models.TextField()
+    created_at=models.DateField(auto_now=True)
+    
+    def __str__(self):
+        return self.vehicle.name
     
