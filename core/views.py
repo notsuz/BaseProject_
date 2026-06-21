@@ -15,12 +15,12 @@ def index(request):
 
 def carsingle(request, id):
     uniVehicles = get_object_or_404(Vehicles, id=id)
-    
-    reviews = Review.objects.filter(vehicle=uniVehicles)
+    reviews = uniVehicles.reviews.all()
+    # reviews = Review.objects.filter(vehicle=uniVehicles)
     review_count = reviews.count()
     
     avg_rating = reviews.aggregate(Avg('rating'))['rating__avg']
-    
+    form = ReviewForm()
     if request.method == "POST":
         form = ReviewForm(data=request.POST)
         if form.is_valid():
@@ -29,18 +29,17 @@ def carsingle(request, id):
             review.vehicle = uniVehicles 
             review.save()
             return redirect('carsingle', id=uniVehicles.id)    
-    else:
-        form = ReviewForm()
+        
+        # related_vehicle=Vehicles.objects.filter(category=uniVehicles.subcategory).exclude(id=uniVehicles.id)
     
     context = {
-        'uniVehicles': uniVehicles,
-       
-        'vehicle': uniVehicles, 
+        'uniVehicles': uniVehicles, 
         'form': form,
         'reviews': reviews,
         'review_count': review_count,
         'range': range(1, 6),  # Makes star loops work natively
         'avg_rating': round(avg_rating) if avg_rating else 0,
+        # 'related_vehicle':related_vehicle
     }
     
     return render(request, 'core/carsingle.html', context)

@@ -10,9 +10,15 @@ accounts app created
 sign in/ sign up page needs to be mainiained along with nav bar
 
 Day 4
+login/sign up created along with google and github setup
 merged to main after completion
 
 
 Day 5
 Fixing the rating process
 rating form not submitted need fixes
+
+DAy 6
+reviews implementation done by user
+login/sign up page  needs edit in templates
+vehicles recommmendation pending

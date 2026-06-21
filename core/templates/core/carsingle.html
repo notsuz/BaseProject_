@@ -225,11 +225,13 @@
 											<p class="star">
 												<span>
 													{% for i in range %}
-													{% if review.rating >= i %}
-													<i class="ion-ios-star"></i>
-													{% else %}
-													<i class="ion-ios-star-outline" style="color: #ccc;"></i>
-													{% endif %}
+
+													<i class="fa {% if review.rating >= i %} fa-star 
+														{% else %} fa-star-0
+														{% endif %} text-warning"></i>
+													<!-- <i class="fa {% if review.rating >= i %}
+                                    							fa-star {% else %} fa-star-o 
+                                {% endif %} text-warning"></i> -->
 													{% endfor %}
 												</span>
 												<span class="text-right">
@@ -274,7 +276,7 @@
 										</div>
 										{% endif %}
 
-										<button type="submit" class="round-black-btn">Submit Review</button>
+										<button type="submit" class="btn btn-primary">Submit Review</button>
 									</form>
 								</div>
 								{% else %}
