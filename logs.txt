@@ -22,3 +22,6 @@ DAy 6
 reviews implementation done by user
 login/sign up page  needs edit in templates
 vehicles recommmendation pending
+
+Day 7
+vehicle recommendation done

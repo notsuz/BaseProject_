@@ -1,15 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Vehicles,Review
 from .forms import ReviewForm
-from django.db.models import Avg
+from django.db.models.functions import Coalesce
+from django.db.models import Avg, Value
 
 # Create your views here.
 def index(request):
     vehicle=Vehicles.objects.all()
+    top_product = Vehicles.objects.annotate(
+        top_rating=Coalesce(Avg('reviews__rating'), Value(0.0))
+    ).order_by('-top_rating')[:3]
     
     
     context={
-        'vehicle': vehicle
+        'vehicle': vehicle,
+        'top_product': top_product
     }
     return render(request, "core/index.html", context)
 
@@ -17,6 +22,7 @@ def carsingle(request, id):
     uniVehicles = get_object_or_404(Vehicles, id=id)
     reviews = uniVehicles.reviews.all()
     # reviews = Review.objects.filter(vehicle=uniVehicles)
+    
     review_count = reviews.count()
     
     avg_rating = reviews.aggregate(Avg('rating'))['rating__avg']

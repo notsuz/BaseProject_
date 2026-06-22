@@ -113,53 +113,32 @@
     </div>
 
     <div class="row g-3">
+			{% for i in top_product %}
+			<div class="col-md-4">
+				<div class="car-wrap rounded shadow-sm pb-3">
+					  
+					
+					<div class="img rounded" style="position: relative; width: 100%; height: 240px; overflow: hidden;">
+						<img src="{{i.image.url}}" alt="Mercedes Grand Sedan"
+							style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+					</div>
 
-      {% for i in related_vehicle %}
+					<div class="text px-4 pt-4">
+						<h2 class="mb-0"><a href="car-single.html">{{i.title|safe|truncatechars:25}}</a></h2>
+						<div class="d-flex mb-3">
+							<span class="cat">{{i.vehicle_type}}</span>
+							<p class="price ml-auto">Rs. {{i.price_per_day}} <span>/day</span></p>
+						</div>
+						<p class="d-flex mb-0 d-block">
+							<a href="#" class="btn btn-primary py-2 mr-1">Book now</a>
+							<a href="{% url 'carsingle' i.id %}" class="btn btn-secondary py-2 ml-1">Details</a>
+						</p>
+					</div>
 
-      <div class="col-12 col-sm-6 col-md-4">
-        <div class="card h-100 border-0 shadow-sm mx-auto"
-          style="border-radius: 10px; overflow: hidden; max-width: 310px;">
-
-          <div style="position: relative; width: 100%; height: 180px; overflow: hidden; background-color: #f8f9fa;">
-            <img src="{{ i.image.url }}" alt="{{ i.title }}"
-              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-          </div>
-
-          <div class="card-body px-3 pt-3 pb-3">
-            <h5 class="card-title fw-bold text-dark mb-1"
-              style="font-size: 1.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-              {{ i.title }}
-            </h5>
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <span class="text-muted fw-normal" style="font-size: 0.9rem; color: #b1b1b1 !important;">
-                {{ i.vehicle_type }}
-              </span>
-              <div class="fw-bold text-primary" style="font-size: 1rem; color: #0d6efd;">
-                Rs. {{ i.price_per_day }}<span class="text-muted fw-normal" style="font-size: 0.75rem;">/day</span>
-              </div>
-            </div>
-
-            <div class="row g-2">
-              <div class="col-6">
-                <a href="#" class="btn btn-primary w-100 py-1.5 fw-semibold" style="border-radius: 5px;">
-                  Book now
-                </a>
-              </div>
-              <div class="col-6">
-                <a href="#" class="btn btn-success w-100 py-1.5 fw-semibold" style="border-radius: 5px;">
-                  Details
-                </a>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      {% endfor %}
-
-    </div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
   </div>
 </section>
 
