@@ -324,3 +324,47 @@
 
 })(jQuery);
 
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.getElementById('star-container');
+    const ratingInput = document.getElementById('rating-value');
+
+    // Safe check to make sure code only runs if elements exist on screen
+    if (!container || !ratingInput) return;
+
+    const stars = container.querySelectorAll('.star');
+
+    stars.forEach(star => {
+        // 1. CLICK: Locks value into the hidden input field
+        star.addEventListener('click', function () {
+            const value = this.getAttribute('data-value');
+            ratingInput.value = value;
+            highlightStars(value);
+        });
+
+        // 2. HOVER IN: Temporarily lights up stars up to hover point
+        star.addEventListener('mouseover', function () {
+            const hoverValue = this.getAttribute('data-value');
+            highlightStars(hoverValue);
+        });
+    });
+
+    // 3. HOVER OUT: Resets selection back to the locked rating input value when leaving container
+    container.addEventListener('mouseleave', function () {
+        const selectedValue = ratingInput.value || 0;
+        highlightStars(selectedValue);
+    });
+
+    // Core coloring machine
+    function highlightStars(value) {
+        stars.forEach(star => {
+            const starValue = parseInt(star.getAttribute('data-value'));
+            if (starValue <= parseInt(value)) {
+                star.style.setProperty('color', '#ffc107', 'important'); // Bright Gold
+            } else {
+                star.style.setProperty('color', '#ccc', 'important');     // Default Gray
+            }
+        });
+    }
+});

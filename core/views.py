@@ -1,26 +1,32 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Vehicles,Review
 from .forms import ReviewForm
-from django.db.models import Avg
+from django.db.models.functions import Coalesce
+from django.db.models import Avg, Value
 
 # Create your views here.
 def index(request):
     vehicle=Vehicles.objects.all()
+    top_product = Vehicles.objects.annotate(
+        top_rating=Coalesce(Avg('reviews__rating'), Value(0.0))
+    ).order_by('-top_rating')[:3]
     
     
     context={
-        'vehicle': vehicle
+        'vehicle': vehicle,
+        'top_product': top_product
     }
     return render(request, "core/index.html", context)
 
 def carsingle(request, id):
     uniVehicles = get_object_or_404(Vehicles, id=id)
+    reviews = uniVehicles.reviews.all()
+    # reviews = Review.objects.filter(vehicle=uniVehicles)
     
-    reviews = Review.objects.filter(vehicle=uniVehicles)
     review_count = reviews.count()
     
     avg_rating = reviews.aggregate(Avg('rating'))['rating__avg']
-    
+    form = ReviewForm()
     if request.method == "POST":
         form = ReviewForm(data=request.POST)
         if form.is_valid():
@@ -29,18 +35,17 @@ def carsingle(request, id):
             review.vehicle = uniVehicles 
             review.save()
             return redirect('carsingle', id=uniVehicles.id)    
-    else:
-        form = ReviewForm()
+        
+    related_vehicle=Vehicles.objects.filter(vehicle_type=uniVehicles.vehicle_type).exclude(id=uniVehicles.id)
     
     context = {
-        'uniVehicles': uniVehicles,
-       
-        'vehicle': uniVehicles, 
+        'uniVehicles': uniVehicles, 
         'form': form,
         'reviews': reviews,
         'review_count': review_count,
         'range': range(1, 6),  # Makes star loops work natively
         'avg_rating': round(avg_rating) if avg_rating else 0,
+        'related_vehicle':related_vehicle
     }
     
     return render(request, 'core/carsingle.html', context)
