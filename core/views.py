@@ -30,7 +30,7 @@ def carsingle(request, id):
             review.save()
             return redirect('carsingle', id=uniVehicles.id)    
         
-        # related_vehicle=Vehicles.objects.filter(category=uniVehicles.subcategory).exclude(id=uniVehicles.id)
+    related_vehicle=Vehicles.objects.filter(vehicle_type=uniVehicles.vehicle_type).exclude(id=uniVehicles.id)
     
     context = {
         'uniVehicles': uniVehicles, 
@@ -39,7 +39,7 @@ def carsingle(request, id):
         'review_count': review_count,
         'range': range(1, 6),  # Makes star loops work natively
         'avg_rating': round(avg_rating) if avg_rating else 0,
-        # 'related_vehicle':related_vehicle
+        'related_vehicle':related_vehicle
     }
     
     return render(request, 'core/carsingle.html', context)

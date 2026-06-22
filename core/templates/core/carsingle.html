@@ -52,6 +52,18 @@
 						<span class="subheading">{{uniVehicles.vehicle_type}}</span>
 						<h2>{{uniVehicles.title}}</h2>
 					</div>
+					<div class="reviews-counter text-center">
+						<div class="rate">
+							{% for i in range %}
+							<i class="fa {% if avg_rating >= i %}
+                                    fa-star {% else %} far fa-star 
+									{% endif %} text-warning"></i>
+
+
+							{% endfor %}
+						</div>
+						<span>{{review_count}} Reviews</span>
+					</div>
 
 				</div>
 			</div>
@@ -205,7 +217,7 @@
 						<div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
 							<div class="row">
 								<div class="col-md-7">
-									<h3 class="head">23 Reviews</h3>
+									<h3 class="head">{{review_count}} Reviews</h3>
 									{% for review in reviews %}
 									<div class="review d-flex align-items-start mb-4">
 										{% if review.user.profile.profile_picture %}
@@ -227,16 +239,14 @@
 													{% for i in range %}
 
 													<i class="fa {% if review.rating >= i %} fa-star 
-														{% else %} fa-star-0
+														{% else %} far fa-star
 														{% endif %} text-warning"></i>
 													<!-- <i class="fa {% if review.rating >= i %}
-                                    							fa-star {% else %} fa-star-o 
+                                    							fa-star {% else %} far fa-star
                                 {% endif %} text-warning"></i> -->
 													{% endfor %}
 												</span>
-												<span class="text-right">
-													<a href="#" class="reply"><i class="icon-reply"></i></a>
-												</span>
+
 											</p>
 
 											<p>{{ review.feedback }}</p>
@@ -299,56 +309,31 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-12 heading-section text-center ftco-animate mb-5">
-				<span class="subheading">Choose Car</span>
-				<h2 class="mb-2">Related Cars</h2>
+				<span class="subheading">Choose Vehicle</span>
+				<h2 class="mb-2">Related Vehicle</h2>
 			</div>
 		</div>
 		<div class="row">
+			{% for i in related_vehicle %}
+			  
+			
 			<div class="col-md-4">
 				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-1.jpg);">
+					<div class="img rounded d-flex align-items-end">
+						<img src="{{i.image.url}}" alt="vehicle image" >
 					</div>
 					<div class="text">
-						<h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+						<h2 class="mb-0"><a href="car-single.html">{{i.name}}</a></h2>
 						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
+							<span class="cat">{{i.vehicle_type}}</span>
+							<p class="price ml-auto">Rs. {{i.price_per_day}} <span>/day</span></p>
 						</div>
 						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
 								href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-2.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="car-single.html">Range Rover</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Subaru</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-								href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="car-wrap rounded ftco-animate">
-					<div class="img rounded d-flex align-items-end" style="background-image: url(images/car-3.jpg);">
-					</div>
-					<div class="text">
-						<h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
-						<div class="d-flex mb-3">
-							<span class="cat">Cheverolet</span>
-							<p class="price ml-auto">$500 <span>/day</span></p>
-						</div>
-						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-								href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
-					</div>
-				</div>
-			</div>
+			{% endfor %}
 		</div>
 	</div>
 </section>
