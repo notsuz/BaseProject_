@@ -24,9 +24,9 @@ login/sign up page  needs edit in templates
 vehicles recommmendation pending
 
 Day 7
+
 vehicle recommendation done
 vehicles displaying in index as per top rating done
-
 Day 8
 Login and sign in page make over needed
 user can book vehicles but need identity proof like lisence photo or any other documents
