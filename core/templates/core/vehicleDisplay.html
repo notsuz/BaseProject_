@@ -48,7 +48,7 @@
 							<p class="price ml-auto">Rs. {{i.price_per_day}} <span>/day</span></p>
 						</div>
 						<p class="d-flex mb-0 d-block">
-							<a href="#" class="btn btn-primary py-2 mr-1">Book now</a>
+							<a href="{% url 'book_vehicle' i.id %}" class="btn btn-primary py-2 mr-1">Book now</a>
 							<a href="{% url 'carsingle' i.id %}" class="btn btn-secondary py-2 ml-1">Details</a>
 						</p>
 					</div>
