@@ -34,30 +34,41 @@
 			{% for i in vehicle %}
 			<div class="col-md-4">
 				<div class="car-wrap rounded shadow-sm pb-3">
-					  
-					
+
 					<div class="img rounded" style="position: relative; width: 100%; height: 240px; overflow: hidden;">
-						<img src="{{i.image.url}}" alt="Mercedes Grand Sedan"
+						<img src="{{ i.image.url }}" alt="{{ i.title }}"
 							style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+
+						{% if i.is_currently_booked %}
+						<span class="position-absolute top-0 end-0 m-3 badge bg-secondary p-2">Booked</span>
+						{% else %}
+						<span class="position-absolute top-0 end-0 m-3 badge bg-success p-2">Available Now</span>
+						{% endif %}
 					</div>
 
 					<div class="text px-4 pt-4">
-						<h2 class="mb-0"><a href="car-single.html">{{i.title|safe|truncatechars:25}}</a></h2>
+						<h2 class="mb-0"><a href="{% url 'carsingle' i.id %}">{{ i.title|safe|truncatechars:25 }}</a>
+						</h2>
 						<div class="d-flex mb-3">
-							<span class="cat">{{i.vehicle_type}}</span>
-							<p class="price ml-auto">Rs. {{i.price_per_day}} <span>/day</span></p>
+							
+							<span class="cat">{{ i.vehicle_type }}</span>
+							<p class="price ml-auto">Rs. {{ i.price_per_day }} <span>/day</span></p>
 						</div>
+
 						<p class="d-flex mb-0 d-block">
-							<a href="{% url 'book_vehicle' i.id %}" class="btn btn-primary py-2 mr-1">Book now</a>
-							<a href="{% url 'carsingle' i.id %}" class="btn btn-secondary py-2 ml-1">Details</a>
+							{% if i.is_currently_booked %}
+							<button class="btn btn-secondary py-2 w-100" disabled>Unavailable Today</button>
+							{% else %}
+							<a href="{% url 'book_vehicle' i.id %}" class="btn btn-primary py-2 mr-1 w-50">Book now</a>
+							<a href="{% url 'carsingle' i.id %}" class="btn btn-secondary py-2 ml-1 w-50">Details</a>
+							{% endif %}
 						</p>
 					</div>
-
 				</div>
 			</div>
 			{% endfor %}
 		</div>
-		
+
 	</div>
 </section>
 
