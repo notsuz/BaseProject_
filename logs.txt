@@ -44,3 +44,7 @@ needs booked status in cars that are booked - booked status updating
 
 DAy 12
 bookingg status displayed on vehicles that are booked / registered in admin panel / - booking status display
+
+Day 13
+login page needs modification - login page customization
+
