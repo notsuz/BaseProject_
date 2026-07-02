@@ -1,3 +1,24 @@
+Vehicle Rental System
+3. Expected Outcomes and deliverables
+1.       A vehicle renting web application UI which allows uses to see different vehicles available for rental.
+2.       Interactive map system which shows where the vehicle is to be taken from.
+3.       Customized search of vehicles which can be done by selecting different attributes by the user.
+4.       Online payment of the rent through integration of payment gateway.
+5.       Authentication and verification for the members through login portal to be eligible for rental process.
+6.       Simple and easy to use UI and UX making it easier for both parties.
+7.       Members who rented vehicles will be able to provide reviews and comments.
+8.       The web app will be able to send notifications to the members regarding duration left for the rental and payment related notifications.
+9.       Members will be allowed to list their vehicle for rent by uploading pictures and giving essential description about it.
+4. Project Risks and Threats
+1.       Real time availability of the product won’t be known automation 
+2.       Project development can get expensive as it requires payment gateway and map integration which might be expensive khalti de, 
+3.       Hardware and software failure during development.
+4.       Web app might take a long time to reach people.
+5.       Members might list out of context items and upload unrelated pictures besides vehicles which will be solved through approval of admin.
+
+
+------------------logs---------------------------------------
+
 Day 1 & 2
 Created models for vechiles, with category as foreign key
 defined views for index/carsingle/
